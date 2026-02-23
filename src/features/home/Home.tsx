@@ -1,75 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Layout, Shield, ArrowRight, LogOut } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../../commons/hooks/useAuth';
+import { NavBar } from '../../commons/components/navBar/NavBar';
+import { TopHeader } from '../../commons/components/header/TopHeader';
 
 export const Home: React.FC = () => {
-  const { logout } = useAuth();
+  const [open, setOpen] = useState(true);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_right,_#1e1b4b_0%,_#0a0a0c_40%)]">
-      <nav className="glass-card mx-auto mt-5 w-[90%] max-w-[1100px] h-[70px] flex items-center justify-between px-6 rounded-2xl">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-brand rounded-lg flex items-center justify-center font-bold text-xl">C</div>
-          <span className="text-2xl font-bold tracking-tight">Conecthus</span>
-        </div>
-        <div className="flex items-center gap-6">
-          <Link to="/users" className="text-muted-foreground font-medium hover:text-white transition-colors">Users</Link>
-          <button onClick={logout} className="text-muted-foreground hover:text-accent transition-colors flex items-center">
-            <LogOut size={18} />
-          </button>
-        </div>
-      </nav>
+    <div className="flex min-h-screen bg-background font-sans">
+      <NavBar open={open} setOpen={setOpen} />
 
-      <main className="max-w-[1000px] mx-auto mt-24 text-center px-5">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col items-center"
-        >
-          <h1 className="gradient-text text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.1] mb-6">
-            Connecting Modern <br /> Infrastructure.
-          </h1>
-          <p className="text-muted-foreground text-lg md:text-xl max-w-[600px] mx-auto mb-12 leading-relaxed">
-            A minimalist approach to user management and connection strategies.
-            Professional, fast, and secure.
-          </p>
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+        <TopHeader />
 
-          <div className="flex justify-center">
-            <Link to="/users" className="bg-brand hover:bg-brand-hover text-white font-semibold py-3 px-6 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center gap-2 shadow-lg shadow-brand/30">
-              View Users <ArrowRight size={20} />
-            </Link>
+        <main className="flex-1 overflow-y-auto bg-background">
+          <div className="p-12 w-full max-w-[1400px] mx-auto">
+            <header className="mb-10">
+              <h1 className="text-2xl font-bold text-sidebar">Home</h1>
+            </header>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="welcome-card p-16 flex flex-col min-h-[600px]"
+            >
+              <div className="mb-12">
+                <h2 className="text-3xl font-bold text-sidebar mb-2">Olá Millena!</h2>
+                <p className="text-muted-foreground text-sm font-medium">22, Novembro 2024</p>
+              </div>
+
+              <div className="flex-1 illustration-container">
+                <div className="relative w-full max-w-md h-72 mb-16 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-brand/5 to-transparent rounded-full scale-110 opacity-50" />
+
+                  <div className="relative flex items-end gap-6 h-full">
+                    <div className="w-20 h-40 bg-brand rounded-2xl shadow-xl shadow-brand/20" />
+                    <div className="w-20 h-48 bg-sidebar rounded-2xl shadow-xl shadow-sidebar/20" />
+                    <div className="w-20 h-36 bg-brand/30 rounded-2xl" />
+                  </div>
+
+                  <div className="absolute top-0 right-1/4 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center">
+                    <div className="w-6 h-6 bg-brand/20 rounded-full flex items-center justify-center">
+                      <div className="w-3 h-3 bg-brand rounded-full" />
+                    </div>
+                  </div>
+                </div>
+
+                <button className="premium-button">
+                  Bem-vindo ao WenLock!
+                </button>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24 pb-12">
-          <FeatureCard
-            icon={<Users className="w-8 h-8 text-brand mb-5" />}
-            title="User Management"
-            description="Manage your team with ease through our intuitive interface."
-          />
-          <FeatureCard
-            icon={<Layout className="w-8 h-8 text-brand mb-5" />}
-            title="Clean Layout"
-            description="Built with the latest design principles for a premium feel."
-          />
-          <FeatureCard
-            icon={<Shield className="w-8 h-8 text-brand mb-5" />}
-            title="Secure Access"
-            description="Smart routing ensures your data stays protected at all times."
-          />
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };
-
-const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; description: string }> = ({ icon, title, description }) => (
-  <div className="glass-card p-8 text-left transition-transform duration-300 hover:-translate-y-2 hover:border-brand rounded-2xl">
-    {icon}
-    <h3 className="text-xl font-semibold mb-3">{title}</h3>
-    <p className="text-muted-foreground leading-relaxed">{description}</p>
-  </div>
-);

@@ -4,18 +4,22 @@
 @theme {
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  --color-background: #0a0a0c;
+  /* WenLock Brand Colors */
+  --color-brand: #00B4D8;
+  --color-brand-hover: #0096B4;
+  --color-sidebar: #061423;
+  --color-background: #F3F3F3;
+  --color-dark-text: #0D1B2A;
+
+  /* Layout Colors */
   --color-foreground: #ffffff;
-  --color-brand: #6366f1;
-  --color-brand-hover: #4f46e5;
-  --color-secondary: #1e1e24;
-  --color-accent: #f43f5e;
-  --color-muted-foreground: #88888b;
+  --color-muted-foreground: #94A3B8;
+  --color-border-light: rgba(0, 0, 0, 0.05);
+  --color-border-white: rgba(255, 255, 255, 0.05);
 
-  --color-glass: rgba(255, 255, 255, 0.03);
-  --color-glass-border: rgba(255, 255, 255, 0.08);
-
-  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  /* Shadows */
+  --shadow-premium: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
+  --shadow-brand-glow: 0 10px 20px -5px rgba(0, 180, 216, 0.2);
 
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
@@ -23,20 +27,42 @@
 
 @layer base {
   * {
-    @apply border-glass-border outline-none;
+    @apply border-[var(--color-border-light)] outline-none transition-colors duration-200;
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden;
+    @apply bg-[var(--color-background)] text-[var(--color-dark-text)] font-sans antialiased overflow-x-hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight font-bold;
   }
 }
 
 @layer utilities {
-  .glass-card {
-    @apply bg-glass backdrop-blur-xl border border-glass-border shadow-glass;
+  .sidebar-container {
+    @apply bg-sidebar flex flex-col relative transition-all duration-300 ease-in-out border-r border-border-white;
   }
 
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-br from-white to-brand/60;
+  .nav-item-active {
+    @apply bg-brand text-white shadow-brand-glow;
+  }
+
+  .nav-item-idle {
+    @apply text-muted-foreground hover:bg-white/5 hover:text-white;
+  }
+
+  .welcome-card {
+    @apply bg-white rounded-2xl shadow-premium border border-gray-100;
+  }
+
+  .illustration-container {
+    @apply relative flex items-center justify-center py-6;
+  }
+
+  .premium-button {
+    @apply px-14 py-4 border-2 border-gray-100 rounded-xl text-base font-bold text-sidebar hover:bg-gray-50 hover:border-gray-200 transition-all active:scale-95;
   }
 }
