@@ -2,6 +2,8 @@
 
 Conecthus é uma aplicação modernae performática construída com **React 19**, **Vite** e **TypeScript**, focada em oferecer uma experiência de usuário fluida e responsiva. O projeto utiliza **Tailwind CSS 4** para estilização e **Framer Motion** para animações interativas.
 
+## Link repositório: https://github.com/guilhermesquita/conecthus-teste-tecnico
+
 ## 🚀 Tecnologias Utilizadas
 
 - [React 19](https://react.dev/)
