@@ -32,9 +32,9 @@ export const Home: React.FC = () => {
 
             <div className="flex-1 flex flex-col items-center justify-center gap-12">
               <img src={ManagerImages.wenlockHomeImage} width={450} height={400} className="mt-[-40px]" />
-              <button className="h-[65px] flex items-center justify-center border rounded-lg border-main-green-300 w-[500px] text-main-green-300 text-xl font-bold hover:bg-main-green-300/5 transition-colors">
+              <div className="h-[65px] flex items-center justify-center border rounded-lg border-main-green-300 w-[500px] text-main-green-300 text-xl font-bold cursor-default">
                 Bem-vindo ao WenLock!
-              </button>
+              </div>
             </div>
           </motion.div>
         </PageLayout>

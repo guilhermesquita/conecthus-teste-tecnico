@@ -210,16 +210,15 @@ const NavListItems: React.FC<NavListItemsProps> = ({ open, setOpen }) => {
             <div className={`px-6 py-8 transition-all duration-300`}>
                 {open ? (
                     <div className="flex flex-col gap-0.5 opacity-100">
-                        <div className="flex items-center gap-1.5 text-white font-bold text-sm">
-                            <span className="text-sm">©</span>
-                            <span className="tracking-tight">WenLock</span>
+                        <div className="flex items-center gap-1.5 text-white font-bold text-[18px] tracking-tight">
+                            © WenLock
                         </div>
-                        <p className="text-[10px] text-gray-500 font-medium">Power by Conecthus</p>
-                        <p className="text-[10px] text-gray-500 font-medium">V 0.0.0</p>
+                        <p className="text-sm text-main-pastel font-medium">Power by Conecthus</p>
+                        <p className="text-sm text-main-pastel font-medium">V 0.0.0</p>
                     </div>
                 ) : (
                     <div className="flex justify-center">
-                        <p className="text-[8px] text-gray-500 font-bold opacity-70">V 0.0.0</p>
+                        <p className="text-sm text-main-pastel font-bold opacity-70">V 0.0.0</p>
                     </div>
                 )}
             </div>
