@@ -77,6 +77,13 @@
   }
 }
 
+.input-shearch::placeholder {
+  color: var(--color-main-green-dark300);
+  opacity: 86%;
+  font-size: 16px;
+  font-weight: 500;
+}
+
 @layer utilities {
   .sidebar-container {
     @apply bg-sidebar flex flex-col relative transition-all duration-300 ease-in-out border-r border-border-white shadow-sidebar;
