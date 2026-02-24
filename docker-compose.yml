@@ -1,0 +1,7 @@
+services:
+  conecthus:
+    build: .
+    ports:
+      - "8080:80"
+    container_name: conecthus-app
+    restart: unless-stopped

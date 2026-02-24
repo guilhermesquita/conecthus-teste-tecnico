@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# Conecthus
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Conecthus é uma aplicação modernae performática construída com **React 19**, **Vite** e **TypeScript**, focada em oferecer uma experiência de usuário fluida e responsiva. O projeto utiliza **Tailwind CSS 4** para estilização e **Framer Motion** para animações interativas.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React 19](https://react.dev/)
+- [Vite 7](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)
+- [Lucide React](https://lucide.dev/) (Ícones)
 
-## React Compiler
+## 📂 Estrutura do Projeto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+conecthus/
+├── public/              # Arquivos estáticos públicos
+├── src/
+│   ├── assets/          # Assets como imagens e logos
+│   ├── commons/         # Componentes e recursos compartilhados
+│   │   ├── components/  # Componentes reutilizáveis (Input, Table, etc)
+│   │   ├── hooks/       # Hooks customizados globais
+│   │   ├── layouts/     # Estruturas de layout da página
+│   │   └── utils/       # Funções utilitárias
+│   ├── features/        # Módulos organizados por funcionalidade
+│   │   ├── auth/        # Autenticação e Login
+│   │   ├── home/        # Dashboard e tela inicial
+│   │   └── users/       # Gestão de usuários
+│   ├── routes/          # Configuração de rotas da aplicação
+│   ├── services/        # Integração com APIs e serviços
+│   ├── styles/          # Estilização global
+│   ├── App.tsx          # Componente raiz
+│   └── main.tsx         # Ponto de entrada
+├── Dockerfile           # Configuração de containerização
+├── nginx.conf           # Configuração do servidor para produção
+└── package.json         # Dependências e scripts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Como Rodar Localmente
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Pré-requisitos
+- [Node.js](https://nodejs.org/) (versão 20 ou superior recomendada)
+- npm ou yarn
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Passos
+1. Clone o repositório:
+   ```bash
+   git clone <url-do-repositorio>
+   cd conecthus
+   ```
+
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+   A aplicação estará disponível em `http://localhost:5173`.
+
+## 🐳 Como Rodar via Docker
+
+Certifique-se de ter o [Docker](https://www.docker.com/) instalado em sua máquina.
+
+### Usando Docker Compose (Recomendado)
+Para subir o container facilmente, utilize:
+```bash
+docker-compose up -d
 ```
+A aplicação estará rodando em `http://localhost:8080`.
+
+### Usando Docker CLI
+Se preferir usar apenas o Docker:
+
+1. Construa a imagem:
+   ```bash
+   docker build -t conecthus .
+   ```
+
+2. Rode o container:
+   ```bash
+   docker run -p 8080:80 conecthus
+   ```
+
+---
+Desenvolvido com ❤️ por Guirmes.
