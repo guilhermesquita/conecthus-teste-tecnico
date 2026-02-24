@@ -90,8 +90,8 @@
     @apply text-white hover:bg-main-hover font-medium hover:text-white;
   }
 
-  .welcome-card {
-    @apply bg-white rounded-2xl shadow-premium border border-gray-100;
+  .info-card {
+    @apply bg-white rounded-lg shadow-premium border border-gray-100;
   }
 
   .illustration-container {
