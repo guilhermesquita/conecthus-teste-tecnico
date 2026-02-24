@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
+import WenlockFullLogo from '../../../assets/icons/wenlock-full-logo.svg?react';
+import WenlockLogo from '../../../assets/icons/wenlock-logo.svg?react';
 
 interface NavListItemsProps {
     open: boolean;
@@ -69,34 +71,28 @@ const NavListItems: React.FC<NavListItemsProps> = ({ open, setOpen }) => {
     };
 
     return (
-        <div className={`${open ? 'w-64' : 'w-20'} sidebar-container h-screen z-40`}>
-            {/* Toggle Sidebar Button */}
+        <div className={`${open ? 'w-[336px]' : 'w-[116px]'} sidebar-container h-screen z-40 pt-[43.49px]`}>
             <button
                 onClick={handleToggleSidebar}
-                className={`absolute -right-3 top-7 w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-lg z-50 transition-transform duration-300 ${!open ? 'rotate-180' : ''}`}
+                className={`cursor-pointer absolute -right-5 top-11 w-[37px] h-[37px] rounded-full bg-[#F2F2F2] flex items-center justify-center  shadow-[0px_3px_6px_rgba(0,0,0,0.16)]  z-50 transition-transform duration-300 ${!open ? 'rotate-180' : ''}`}
             >
-                <ChevronLeft size={14} className="text-sidebar" strokeWidth={3} />
+                <ChevronLeft size={24} className="text-main-green-300/60" strokeWidth={3} />
             </button>
 
-            {/* Logo Area */}
-            <div className={`flex items-center justify-center h-[100px] px-6`}>
-                <div className="flex items-center font-bold text-3xl tracking-tighter">
-                    <span className="text-brand">W</span>
+            <div className={`px-10 h-[100px]`}>
+                <div >
                     {open ? (
                         <>
-                            <span className="text-white transition-opacity duration-300">enLock</span>
-                            <span className="text-brand">.</span>
+                            <WenlockFullLogo className="h-[36.39px] w-[234.68px]" />
                         </>
                     ) : (
                         <div className="flex flex-col items-center ml-0.5">
-                            <span className="text-white">L</span>
-                            <div className="w-2 h-2 bg-brand rounded-full mt-[-4px]" />
+                            <WenlockLogo className="h-[56.39px] w-[71.49px]" />
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* Navigation */}
             <nav className="flex-1 px-3 mt-6 select-none">
                 <ul className="space-y-2">
                     {menuItems.map((item) => (

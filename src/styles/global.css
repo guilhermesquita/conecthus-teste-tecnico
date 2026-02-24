@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* WenLock Brand Colors */
   --color-brand: #00B4D8;
@@ -10,6 +11,29 @@
   --color-sidebar: #061423;
   --color-background: #F3F3F3;
   --color-dark-text: #0D1B2A;
+  --color-main-cyan-100: #00AAC1;
+  --color-main-cyan-200: #0290A4;
+  --color-main-dark-blue: #0d1931;
+  --color-main-gray-100: #f0f0f0;
+  --color-main-red: #B00020;
+  --color-main-hover: #00606D;
+  --color-main-pastel: #AACBC4;
+  --color-main-alerts-yellow-light: #FFCC00;
+  --color-main-alerts-orange-light: #FF7700;
+  --color-main-alerts-green-light: #00C857;
+  --color-main-alerts-red-light: #FF4B4A;
+  --color-main-full-white: #FFFFFF;
+  --color-main-gray: #6F7D7D;
+  --color-main-green-black-menu: #021B1A;
+  --color-main-green-dark100: #032221;
+  --color-main-green-dark200: #17876D;
+  --color-main-green-dark300: #0A453A;
+  --color-main-green-100: #08644E;
+  --color-main-green-200: #0A453A;
+  --color-main-green-300: #0B2B25;
+  --color-main-green-white: #F0FFFC;
+  --color-main-green-fe: #00E081;
+  --color-main-green-fc: #02BC6700;
 
   /* Layout Colors */
   --color-foreground: #ffffff;
@@ -20,9 +44,21 @@
   /* Shadows */
   --shadow-premium: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
   --shadow-brand-glow: 0 10px 20px -5px rgba(0, 180, 216, 0.2);
+  --shadow-sidebar: 7px 0px 6px #0000002C;
 
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
+
+  --text-xs: 10px;
+  --text-sm: 12px;
+  --text-base: 14px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 24px;
+  --text-3xl: 26px;
+  --text-4xl: 38px;
+  --text-5xl: 44px;
+  --text-7xl: 64px;
 }
 
 @layer base {
@@ -43,7 +79,7 @@
 
 @layer utilities {
   .sidebar-container {
-    @apply bg-sidebar flex flex-col relative transition-all duration-300 ease-in-out border-r border-border-white;
+    @apply bg-sidebar flex flex-col relative transition-all duration-300 ease-in-out border-r border-border-white shadow-sidebar;
   }
 
   .nav-item-active {
