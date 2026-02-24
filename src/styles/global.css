@@ -83,11 +83,11 @@
   }
 
   .nav-item-active {
-    @apply bg-brand text-white shadow-brand-glow;
+    @apply bg-main-cyan-100 text-main-green-black-menu font-bold;
   }
 
   .nav-item-idle {
-    @apply text-muted-foreground hover:bg-white/5 hover:text-white;
+    @apply text-white hover:bg-main-hover font-medium hover:text-white;
   }
 
   .welcome-card {

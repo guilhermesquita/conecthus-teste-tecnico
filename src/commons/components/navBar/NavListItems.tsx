@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import {
-    PieChart,
-    ShieldCheck,
-    Users,
     ChevronLeft,
-    ChevronDown,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import WenlockFullLogo from '../../../assets/icons/wenlock-full-logo.svg?react';
 import WenlockLogo from '../../../assets/icons/wenlock-logo.svg?react';
+import ChartIcon from '../../../assets/icons/chart.svg?react';
+import CredentialIcon from '../../../assets/icons/credential.svg?react';
+import UserIcon from '../../../assets/icons/user.svg?react';
+import ChevronIcon from '../../../assets/icons/chevron.svg?react';
 
 interface NavListItemsProps {
     open: boolean;
@@ -20,7 +20,47 @@ const NavListItems: React.FC<NavListItemsProps> = ({ open, setOpen }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [hoveredItem, setHoveredItem] = useState<number | null>(null);
-    const [expandedMenus, setExpandedMenus] = useState<number[]>([2]);
+    const menuItems = [
+        { id: 1, label: 'Home', icon: ChartIcon, path: '/' },
+        {
+            id: 2,
+            label: 'Controle de Acesso',
+            icon: CredentialIcon,
+            hasSubmenu: true,
+            submenu: [
+                { label: 'Usuários', icon: UserIcon, path: '/users' }
+            ]
+        },
+    ];
+
+    const isPathActive = (path?: string) => {
+        if (!path) return false;
+        if (path === '/' && location.pathname === '/') return true;
+        if (path !== '/' && location.pathname.startsWith(path)) return true;
+        return false;
+    };
+
+    const isParentActive = (item: any) => {
+        if (item.path && isPathActive(item.path)) return true;
+        if (item.submenu) {
+            return item.submenu.some((sub: any) => isPathActive(sub.path));
+        }
+        return false;
+    };
+
+    const [expandedMenus, setExpandedMenus] = useState<number[]>(() =>
+        menuItems
+            .filter(item => item.hasSubmenu && item.submenu?.some(sub => isPathActive(sub.path)))
+            .map(item => item.id)
+    );
+
+    React.useEffect(() => {
+        menuItems.forEach(item => {
+            if (item.hasSubmenu && isParentActive(item)) {
+                setExpandedMenus(prev => prev.includes(item.id) ? prev : [...prev, item.id]);
+            }
+        });
+    }, [location.pathname]);
 
     const handleToggleSidebar = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -42,33 +82,7 @@ const NavListItems: React.FC<NavListItemsProps> = ({ open, setOpen }) => {
         );
     };
 
-    const menuItems = [
-        { id: 1, label: 'Home', icon: PieChart, path: '/' },
-        {
-            id: 2,
-            label: 'Controle de Acesso',
-            icon: ShieldCheck,
-            hasSubmenu: true,
-            submenu: [
-                { label: 'Usuários', icon: Users, path: '/users' }
-            ]
-        },
-    ];
 
-    const isPathActive = (path?: string) => {
-        if (!path) return false;
-        if (path === '/' && location.pathname === '/') return true;
-        if (path !== '/' && location.pathname.startsWith(path)) return true;
-        return false;
-    };
-
-    const isParentActive = (item: any) => {
-        if (item.path && isPathActive(item.path)) return true;
-        if (item.submenu) {
-            return item.submenu.some((sub: any) => isPathActive(sub.path));
-        }
-        return false;
-    };
 
     return (
         <div className={`${open ? 'w-[336px]' : 'w-[116px]'} sidebar-container h-screen z-40 pt-[43.49px]`}>
@@ -93,7 +107,7 @@ const NavListItems: React.FC<NavListItemsProps> = ({ open, setOpen }) => {
                 </div>
             </div>
 
-            <nav className="flex-1 px-3 mt-6 select-none">
+            <nav className="flex-1 px-[15px] select-none">
                 <ul className="space-y-2">
                     {menuItems.map((item) => (
                         <li
@@ -111,28 +125,40 @@ const NavListItems: React.FC<NavListItemsProps> = ({ open, setOpen }) => {
                                     }
                                 }}
                                 className={`
-                                    flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all
-                                    ${isParentActive(item) ? 'nav-item-active' : 'nav-item-idle'}
+                                    flex items-center gap-[10px] py-[15px] px-[18px] rounded-lg cursor-pointer transition-all text-lg
+                                    ${item.hasSubmenu
+                                        ? (open && expandedMenus.includes(item.id)
+                                            ? (isParentActive(item) ? 'text-white/60 text-lg font-bold' : 'text-white text-lg font-bold')
+                                            : 'nav-item-idle'
+                                        )
+                                        : (isParentActive(item) ? 'nav-item-active' : 'nav-item-idle')
+                                    }
                                     ${!open ? 'justify-center w-12 h-12 mx-auto p-0' : ''}
                                 `}
                             >
-                                <item.icon size={open ? 18 : 22} className="shrink-0" />
+                                <item.icon
+                                    className={`shrink-0 w-6 h-6 ${item.hasSubmenu && open && expandedMenus.includes(item.id)
+                                        ? (isParentActive(item) ? 'opacity-60' : 'opacity-100')
+                                        : ''
+                                        }`}
+                                />
                                 {open && (
                                     <>
-                                        <span className="flex-1 text-[13px] font-medium whitespace-nowrap">{item.label}</span>
+                                        <span className={`flex-1 text-lg whitespace-nowrap ${isParentActive(item) ? 'font-bold' : 'font-medium'}`}>{item.label}</span>
                                         {item.hasSubmenu && (
-                                            <ChevronDown
-                                                size={14}
-                                                className={`transition-transform duration-300 opacity-50 ${expandedMenus.includes(item.id) ? 'rotate-180' : ''}`}
+                                            <ChevronIcon
+                                                className={`transition-transform duration-300 w-6 h-6 ${expandedMenus.includes(item.id)
+                                                    ? (isParentActive(item) ? 'opacity-60 rotate-0' : 'opacity-100 rotate-0')
+                                                    : 'opacity-50 rotate-180'
+                                                    }`}
                                             />
                                         )}
                                     </>
                                 )}
                             </div>
 
-                            {/* Collapsed Popover for Submenu */}
                             {!open && item.hasSubmenu && hoveredItem === item.id && (
-                                <div className="absolute left-[calc(100%+12px)] top-0 z-50">
+                                <div className="absolute left-[calc(100%+15px)] top-0 z-50">
                                     <div className="bg-brand text-white rounded-lg py-2 px-4 shadow-xl whitespace-nowrap flex flex-col gap-1 min-w-[120px]">
                                         <div className="absolute -left-1.5 top-5 w-3 h-3 bg-brand rotate-45" />
                                         <span className="text-[10px] uppercase font-bold tracking-wider opacity-70 mb-1">{item.label}</span>
@@ -150,7 +176,6 @@ const NavListItems: React.FC<NavListItemsProps> = ({ open, setOpen }) => {
                                 </div>
                             )}
 
-                            {/* Expanded Submenu (Accordion) */}
                             <AnimatePresence>
                                 {open && item.hasSubmenu && expandedMenus.includes(item.id) && (
                                     <motion.ul
@@ -165,12 +190,12 @@ const NavListItems: React.FC<NavListItemsProps> = ({ open, setOpen }) => {
                                                 <div
                                                     onClick={() => navigate(sub.path)}
                                                     className={`
-                                                        flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all
-                                                        ${isPathActive(sub.path) ? 'bg-brand text-sidebar font-bold' : 'nav-item-idle'}
+                                                        flex items-center gap-3 py-2 px-2.75 rounded-lg cursor-pointer transition-all
+                                                        ${isPathActive(sub.path) ? 'bg-main-cyan-100 text-sidebar font-bold' : 'nav-item-idle'}
                                                     `}
                                                 >
-                                                    <sub.icon size={18} className="shrink-0" />
-                                                    <span className="text-[13px] font-medium whitespace-nowrap">{sub.label}</span>
+                                                    <sub.icon className="shrink-0 w-6 h-6" />
+                                                    <span className={`flex-1 text-lg whitespace-nowrap ${isParentActive(item) ? 'font-bold' : 'font-medium'}`}>{sub.label}</span>
                                                 </div>
                                             </li>
                                         ))}
@@ -182,7 +207,6 @@ const NavListItems: React.FC<NavListItemsProps> = ({ open, setOpen }) => {
                 </ul>
             </nav>
 
-            {/* Footer */}
             <div className={`px-6 py-8 transition-all duration-300`}>
                 {open ? (
                     <div className="flex flex-col gap-0.5 opacity-100">
