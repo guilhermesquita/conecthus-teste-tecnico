@@ -16,11 +16,9 @@ interface AuthContextType {
     login: (userData?: User) => void;
     logout: () => void;
     addUser: (newUser: Omit<User, 'id' | 'createdAt' | 'updatedAt'>) => void;
-
     updateUser: (id: number, updatedData: Partial<User>) => void;
-
+    deleteUser: (id: number) => void;
 }
-
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -42,7 +40,6 @@ const SEEDED_USERS: User[] = [
     { id: 5, name: 'Carlos Eduardo Santos', enrollment: '809990', email: 'carlos.eduardo@energy.com.br', createdAt: CURRENT_DATE, updatedAt: null },
     { id: 6, name: 'Diana Oliveira Lima', enrollment: '809991', email: 'diana.oliveira@energy.com.br', createdAt: CURRENT_DATE, updatedAt: null },
 ];
-
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(() => {
@@ -120,15 +117,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.setItem('users', JSON.stringify(updatedUsers));
     };
 
+    const deleteUser = (id: number) => {
+        const updatedUsers = users.filter(u => u.id !== id);
+        setUsers(updatedUsers);
+        localStorage.setItem('users', JSON.stringify(updatedUsers));
+    };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, users, login, logout, addUser, updateUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, users, login, logout, addUser, updateUser, deleteUser }}>
             {children}
         </AuthContext.Provider>
     );
 };
-
-
 
 export const useAuth = () => {
     const context = useContext(AuthContext);
@@ -137,4 +137,3 @@ export const useAuth = () => {
     }
     return context;
 };
-

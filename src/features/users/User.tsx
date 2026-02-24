@@ -7,6 +7,8 @@ import { TopHeader } from '../../commons/components/header/TopHeader';
 import { PageLayout } from '../../commons/components/layout/PageLayout';
 import { Table } from '../../commons/components/table/Table';
 import { useAuth } from '../../commons/hooks/useAuth';
+import { useSnackbar } from '../../commons/hooks/useSnackbar';
+import { ConfirmModal } from '../../commons/components/ConfirmModal';
 import SearchIcon from '../../assets/icons/search.svg?react';
 import EyeIcon from '../../assets/icons/eye.svg?react';
 import EyeFilledIcon from '../../assets/icons/eyeFilled.svg?react';
@@ -27,7 +29,10 @@ export const UserList: React.FC = () => {
   const [search, setSearch] = useState('');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const { users } = useAuth();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const { users, deleteUser } = useAuth();
+  const { showSnack } = useSnackbar();
 
 
   const filteredUsers = users.filter(user =>
@@ -37,6 +42,20 @@ export const UserList: React.FC = () => {
   const handleViewUser = (user: User) => {
     setSelectedUser(user);
     setIsDrawerOpen(true);
+  };
+
+  const handleDeleteClick = (user: User) => {
+    setUserToDelete(user);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (userToDelete) {
+      deleteUser(userToDelete.id);
+      setIsDeleteModalOpen(false);
+      setUserToDelete(null);
+      showSnack('exclusão realizada', 'success');
+    }
   };
 
   const labelValue = (label: string, value: string) => (
@@ -125,7 +144,10 @@ export const UserList: React.FC = () => {
                       <PenFilledIcon className='w-6 h-6 hidden group-hover:block' />
                     </button>
 
-                    <button className="bg-white hover:bg-main-cyan-200 p-1.5 rounded shadow-lg border border-gray-50 text-[#0F2621] hover:text-white transition-all cursor-pointer group">
+                    <button
+                      onClick={() => handleDeleteClick(user)}
+                      className="bg-white hover:bg-main-cyan-200 p-1.5 rounded shadow-lg border border-gray-50 text-[#0F2621] hover:text-white transition-all cursor-pointer group"
+                    >
                       <TrashIcon className='w-6 h-6 group-hover:hidden' />
                       <TrashFilledIcon className='w-6 h-6 hidden group-hover:block' />
                     </button>
@@ -216,6 +238,17 @@ export const UserList: React.FC = () => {
           </div>
         )}
       </SideDrawer>
+
+      <ConfirmModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => {
+          setIsDeleteModalOpen(false);
+          setUserToDelete(null);
+        }}
+        onConfirm={confirmDelete}
+        title="Deseja excluir?"
+        description="O usuário será excluído."
+      />
     </div>
 
   );
