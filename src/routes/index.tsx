@@ -3,7 +3,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../commons/hooks/useAuth';
 import { Home } from '../features/home/Home';
 import { UserList } from '../features/users/User';
+import { UserForm } from '../features/users/UserForm';
 import { Login } from '../features/auth/Login';
+
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { isAuthenticated } = useAuth();
@@ -34,6 +36,23 @@ export const AppRoutes: React.FC = () => {
                     </PrivateRoute>
                 }
             />
+            <Route
+                path="/users/create"
+                element={
+                    <PrivateRoute>
+                        <UserForm />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/users/edit/:id"
+                element={
+                    <PrivateRoute>
+                        <UserForm />
+                    </PrivateRoute>
+                }
+            />
+
             <Route
                 path="/login"
                 element={
