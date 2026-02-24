@@ -18,6 +18,7 @@ import TrashIcon from '../../assets/icons/trash.svg?react';
 import TrashFilledIcon from '../../assets/icons/trashFilled.svg?react';
 import NextPreviousIcon from '../../assets/icons/nextPrevious.svg?react';
 import { SideDrawer } from '../../commons/components/SideDrawer';
+import { EmptyState } from '../../commons/components/EmptyState';
 import type { User } from '../../commons/hooks/useAuth';
 
 
@@ -116,6 +117,29 @@ export const UserList: React.FC = () => {
             data={filteredUsers}
             keyExtractor={(user) => user.id}
             rowGap={6}
+            emptyState={
+              users.length === 0 ? (
+                <div className='h-[620px] flex items-center justify-center'>
+                  <EmptyState
+                    title="Nenhum Usuário Registrado"
+                    description="Clique em “Cadastrar Usuário” para começar a cadastrar."
+                    showImage={false}
+                  />
+                </div>
+              ) : (
+                <div className='h-[620px]'>
+                  <EmptyState
+                    title="Nenhum Resultado Encontrado"
+                    description={
+                      <>
+                        Não foi possível achar nenhum resultado para sua busca.<br />
+                        Tente refazer a pesquisa para encontrar o que busca.
+                      </>
+                    }
+                  />
+                </div>
+              )
+            }
             columns={[
               {
                 header: 'Nome',
@@ -157,43 +181,45 @@ export const UserList: React.FC = () => {
             ]}
           />
 
-          <div className="mt-auto flex justify-between items-center text-base text-main-green-300 font-medium pt-10 pb-8">
-            <div>
-              Total de itens:<span className="font-bold ml-1">{filteredUsers.length}</span>
-            </div>
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2">
-                <span>Itens por página</span>
-                <button className="font-bold flex items-center gap-1 cursor-pointer bg-transparent border-none">
-                  15
-                </button>
+          {filteredUsers.length > 0 && (
+            <div className="mt-auto flex justify-between items-center text-base text-main-green-300 font-medium pt-10 pb-8">
+              <div>
+                Total de itens:<span className="font-bold ml-1">{filteredUsers.length}</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1 mr-2 text-[#616c84]">
-                  <button className="p-1 hover:bg-gray-100 rounded transition-colors">
-                    <NextPreviousIcon />
-                  </button>
-                  <button className="p-1 hover:bg-gray-100 rounded transition-colors">
-                    <ChevronLeft size={18} />
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2">
+                  <span>Itens por página</span>
+                  <button className="font-bold flex items-center gap-1 cursor-pointer bg-transparent border-none">
+                    15
                   </button>
                 </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1 mr-2 text-[#616c84]">
+                    <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                      <NextPreviousIcon />
+                    </button>
+                    <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                      <ChevronLeft size={18} />
+                    </button>
+                  </div>
 
-                <div className="bg-main-cyan-200 text-white w-[45px] h-[44px] flex items-center justify-center rounded text-sm font-bold shadow-md shadow-main-cyan-200/20 cursor-pointer">
-                  1
-                </div>
+                  <div className="bg-main-cyan-200 text-white w-[45px] h-[44px] flex items-center justify-center rounded text-sm font-bold shadow-md shadow-main-cyan-200/20 cursor-pointer">
+                    1
+                  </div>
 
-                <div className="flex items-center gap-1 ml-2 text-[#616c84]">
-                  <button className="p-1 hover:bg-gray-100 rounded transition-colors">
-                    <ChevronRight size={18} />
-                  </button>
-                  <button className="p-1 hover:bg-gray-100 rounded transition-colors">
-                    <NextPreviousIcon className='rotate-180' />
-                  </button>
+                  <div className="flex items-center gap-1 ml-2 text-[#616c84]">
+                    <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                      <ChevronRight size={18} />
+                    </button>
+                    <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                      <NextPreviousIcon className='rotate-180' />
+                    </button>
+                  </div>
+                  <span className="ml-2 lowercase font-bold">de 1</span>
                 </div>
-                <span className="ml-2 lowercase font-bold">de 1</span>
               </div>
             </div>
-          </div>
+          )}
         </PageLayout>
       </div>
 

@@ -23,16 +23,16 @@ export const Home: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="info-card px-7 py-6 flex flex-col min-h-[600px]"
+            className="info-card px-10 py-10 flex flex-col min-h-[765px]"
           >
             <div>
-              <h2 className="text-[32px] font-bold text-main-dark-blue mb-2">Olá {firstName}!</h2>
-              <p className="text-main-dark-blue text-xl font-medium">{new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
+              <h2 className="text-[32px] font-bold text-main-green-300 mb-2">Olá {firstName}!</h2>
+              <p className="text-main-green-300 text-lg font-medium opacity-80">{new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
             </div>
 
-            <div className="flex-1 flex-col gap-[15px] illustration-container">
-              <img src={ManagerImages.wenlockHomeImage} width={400} height={350} />
-              <button className="py-4 flex justify-center border rounded border-[#272846] w-[500px] text-main-green-300 text-xl font-bold">
+            <div className="flex-1 flex flex-col items-center justify-center gap-12">
+              <img src={ManagerImages.wenlockHomeImage} width={450} height={400} className="mt-[-40px]" />
+              <button className="h-[65px] flex items-center justify-center border rounded-lg border-main-green-300 w-[500px] text-main-green-300 text-xl font-bold hover:bg-main-green-300/5 transition-colors">
                 Bem-vindo ao WenLock!
               </button>
             </div>

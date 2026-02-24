@@ -13,9 +13,10 @@ interface TableProps<T> {
     data: T[];
     keyExtractor: (item: T) => string | number;
     rowGap?: number;
+    emptyState?: React.ReactNode;
 }
 
-export function Table<T>({ columns, data, keyExtractor, rowGap = 16 }: TableProps<T>) {
+export function Table<T>({ columns, data, keyExtractor, rowGap = 16, emptyState }: TableProps<T>) {
     return (
         <div className="flex flex-col">
             <div className="bg-sidebar rounded-lg px-6 py-4 flex items-center shadow-lg">
@@ -35,28 +36,32 @@ export function Table<T>({ columns, data, keyExtractor, rowGap = 16 }: TableProp
             </div>
 
             <div className="flex flex-col" style={{ gap: rowGap, marginTop: rowGap }}>
-                {data.map((item) => (
-                    <motion.div
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        key={keyExtractor(item)}
-                        className="bg-white border border-gray-100 rounded-lg px-6 py-[17px] flex items-center shadow-sm hover:shadow-md transition-all cursor-default"
-                    >
-                        {columns.map((column, index) => (
-                            <div
-                                key={index}
-                                className={`text-sidebar text-[16px] font-medium ${column.className || 'flex-1'} ${column.align === 'right'
-                                    ? 'flex justify-end pr-[32px]'
-                                    : column.align === 'center'
-                                        ? 'text-center'
-                                        : 'text-left'
-                                    }`}
-                            >
-                                {column.render(item)}
-                            </div>
-                        ))}
-                    </motion.div>
-                ))}
+                {data.length > 0 ? (
+                    data.map((item) => (
+                        <motion.div
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            key={keyExtractor(item)}
+                            className="bg-white border border-gray-100 rounded-lg px-6 py-[17px] flex items-center shadow-sm hover:shadow-md transition-all cursor-default"
+                        >
+                            {columns.map((column, index) => (
+                                <div
+                                    key={index}
+                                    className={`text-sidebar text-[16px] font-medium ${column.className || 'flex-1'} ${column.align === 'right'
+                                        ? 'flex justify-end pr-[32px]'
+                                        : column.align === 'center'
+                                            ? 'text-center'
+                                            : 'text-left'
+                                        }`}
+                                >
+                                    {column.render(item)}
+                                </div>
+                            ))}
+                        </motion.div>
+                    ))
+                ) : (
+                    emptyState
+                )}
             </div>
         </div>
     );
